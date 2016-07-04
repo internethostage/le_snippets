@@ -5,53 +5,61 @@ RSpec.describe User, type: :model do
   context "validations" do
 
     it "is valid with a firstname, lastname, email and password" do
-      u = User.new FactoryGirl.attributes_for(:user)
+      u = User.new attributes_for(:user)
       expect(u).to be_valid
     end
 
     it "is invalid without a first name" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({first_name: nil})
-      expect(u).to be_invalid
+      u = build(:user, first_name: nil)
+      u.valid?
+      expect(u.errors[:first_name]).to include("can't be blank")
     end
 
     it "is invalid without a last name" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({last_name: nil})
-      expect(u).to be_invalid
+      u = build(:user, last_name: nil)
+      u.valid?
+      expect(u.errors[:last_name]).to include("can't be blank")
     end
 
     it "is invalid without an email address" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({email: nil})
-      expect(u).to be_invalid
+      u = build(:user, email: nil)
+      u.valid?
+      expect(u.errors[:email]).to include("can't be blank")
     end
 
     it "is an invalid email if it doesn't have a (dot) domain" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({email: "test@test"})
-      expect(u).to be_invalid
+      u = build(:user, email: "test@test")
+      u.valid?
+      expect(u.errors[:email]).to include("is invalid")
     end
 
     it "is an invalid email if it doesn't have an @" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({email: "test.com"})
-      expect(u).to be_invalid
+      u = build(:user, email: "test.com")
+      u.valid?
+      expect(u.errors[:email]).to include("is invalid")
     end
 
     it "is invalid with a duplicate email address" do
-      u = FactoryGirl.create(:user)
-      u2 = User.new FactoryGirl.attributes_for(:user).merge({email: u.email})
-      expect(u2).to be_invalid
+      u = create(:user)
+      u2 = build(:user, email: u.email)
+      u2.valid?
+      expect(u2.errors[:email]).to include("has already been taken")
     end
 
     it "is invalid without a password" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({password: nil, password_confirmation: nil})
-      expect(u).to be_invalid
+      u = build(:user, password: nil, password_confirmation: nil)
+      u.valid?
+      expect(u.errors[:password]).to include("can't be blank", "is too short (minimum is 8 characters)")
     end
 
     it "is invalid with a short password" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({password: 'short', password_confirmation: 'short'})
-      expect(u).to be_invalid
+      u = build(:user, password: 'short', password_confirmation: 'short')
+      u.valid?
+      expect(u.errors[:password]).to include("is too short (minimum is 8 characters)")
     end
 
     it "is invalid with a password confirmation mismatch" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({password: 'P4SSw0rd', password_confirmation: 'dr0wSS4P'})
+      u = build(:user, password: 'P4SSw0rd', password_confirmation: 'dr0wSS4P')
       expect(u).to be_invalid
     end
 
@@ -59,14 +67,14 @@ RSpec.describe User, type: :model do
 
   context "full_name method" do
     it "returns a concatenated first and last name" do
-      u = User.new FactoryGirl.attributes_for(:user).merge({first_name: "John", last_name: "Doe"})
+      u = User.new attributes_for(:user).merge({first_name: "John", last_name: "Doe"})
       expect(u.full_name).to eq("John Doe")
     end
   end
 
   context "hashing the password method" do
     it "generates a password digest" do
-      u = User.new FactoryGirl.attributes_for(:user)
+      u = User.new attributes_for(:user)
       u.save
       expect(u.password_digest).to be
     end
