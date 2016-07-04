@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  context "validations" do
+  describe "validations" do
 
     it "is valid with a firstname, lastname, email and password" do
-      u = User.new attributes_for(:user)
+      u = build(:user)
       expect(u).to be_valid
     end
 
@@ -65,14 +65,14 @@ RSpec.describe User, type: :model do
 
   end
 
-  context "full_name method" do
+  describe "full_name method" do
     it "returns a concatenated first and last name" do
       u = User.new attributes_for(:user).merge({first_name: "John", last_name: "Doe"})
       expect(u.full_name).to eq("John Doe")
     end
   end
 
-  context "hashing the password method" do
+  describe "hashing the password method" do
     it "generates a password digest" do
       u = User.new attributes_for(:user)
       u.save
