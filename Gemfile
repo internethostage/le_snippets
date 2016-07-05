@@ -35,8 +35,12 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
 
-# easier form creationg
+# easier form creation
 gem 'simple_form'
+
+# These 2 gems help with markdown of blog posts and higlights
+gem 'pygments.rb'
+gem 'redcarpet'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
