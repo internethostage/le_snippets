@@ -1,4 +1,5 @@
 class SnippetsController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :index]
   before_action :find_snippet, only: [:show, :edit, :update, :destroy]
 
   def index

@@ -1,29 +1,37 @@
-<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
-  <h1 class="text-center">Log In</h1>
-  <hr>
-  <br>
-  <%= simple_form_for :signin, {url: sessions_path } do |f| %>
-
-  <div class="input-group">
-      <span class="input-group-addon">
-          <i class="fa fa-user fa-2x" aria-hidden="true"></i>
-      </span>
-      <%= f.input :email, label: false, placeholder: "Ex. user@mail.com", input_html: { class:"form-control form-with-icon input-lg" }, label_html: { class:"input-lg" }%>
-  </div>
-
-
-  <div class="input-group">
-      <span class="input-group-addon">
-          <i class="fa fa-key fa-2x" aria-hidden="true"></i>
-      </span>
-    <%= f.input :password, label: false, placeholder: "Password", input_html: { class:"form-control form-with-icon input-lg" }, label_html: { class:"input-lg" } %>
-  </div>
-
+<div class="row">
+  <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+    <h1 class="text-center">Log In</h1>
+    <hr>
     <br>
-    <%= f.button :submit, "Log In", class: "btn-success btn-lg center-block" %>
-  <% end %>
-  <br>
-  <br>
-  <br>
-  <br>
+    <%= simple_form_for :signin, {url: sessions_path } do |f| %>
+
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+        </span>
+        <%= f.input :email, label: false, placeholder: "Ex. user@mail.com", input_html: { class:"form-control form-with-icon input-lg" }, label_html: { class:"input-lg" }%>
+    </div>
+
+
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-key fa-2x" aria-hidden="true"></i>
+        </span>
+      <%= f.input :password, label: false, placeholder: "Password", input_html: { class:"form-control form-with-icon input-lg" }, label_html: { class:"input-lg" } %>
+    </div>
+
+      <br>
+      <%= f.button :submit, "Log In", class: "btn-success btn-lg center-block" %>
+    <% end %>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-offset-3 col-sm-6">
+    <h4 class="text-center well well-sm"> Don't have an account? <%= link_to "Sign Up", new_user_path %> </h4>
+  </div>
 </div>
