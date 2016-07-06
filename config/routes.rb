@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'languages#index'
+  root 'static#index'
   resources :users, only: [:new, :create]
   resources :languages, only: [:index, :show]
   resources :snippets

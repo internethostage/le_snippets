@@ -1,0 +1,6 @@
+<h1>Snippets by Language</h1>
+<div>
+  <% @languages.each do |language| %>
+    <li><%= (language.snippets.length) > 0 ? (link_to language.name, language_path(language)) : (language.name) %> (<%= language.snippets.length %> Snippets)</li>
+  <% end %>
+</div>

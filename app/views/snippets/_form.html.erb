@@ -1,0 +1,10 @@
+<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+  <%= simple_form_for @snippet do |f| %>
+
+    <%= f.input :name, required: false, placeholder: "Snippet name" %>
+    <%= f.association :language, required: false, include_blank: "Choose a snippet language" %>
+    <%= f.input :body, required: false, :input_html => {:rows => 10}, placeholder: "Your code snippet..." %>
+    <%= f.input :private, label: "Make snippet private?" %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

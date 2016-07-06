@@ -15,11 +15,21 @@ RSpec.describe Snippet, type: :model do
       expect(s.errors[:name]).to include("can't be blank")
     end
 
-    it 'is invalid with a duplicate name' do
-      s = create(:snippet)
-      s2 = build(:snippet, name: s.name)
+    it 'is invalid with a duplicate name within the same language' do
+      l = create(:language)
+      s = create(:snippet, language: l)
+      s2 = build(:snippet, name: s.name, language: l)
       s2.valid?
       expect(s2.errors[:name]).to include("has already been taken")
+    end
+
+    it 'is valid with a duplicate name within a different language' do
+      l = create(:language)
+      l2 = create(:language)
+      s = create(:snippet, language: l)
+      s2 = build(:snippet, name: s.name, language: l2)
+      s2.valid?
+      expect(s2).to be_valid
     end
 
     it 'is invalid without a body' do
