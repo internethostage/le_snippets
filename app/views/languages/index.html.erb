@@ -1,6 +1,16 @@
 <h1>Snippets by Language</h1>
-<div>
-  <% @languages.each do |language| %>
-    <li><%= (language.snippets.length) > 0 ? (link_to language.name, language_path(language)) : (language.name) %> (<%= language.snippets.length %> Snippets)</li>
-  <% end %>
-</div>
+<% @snippets.each do |language,snippets| %>
+  <h3><%= "#{language} (#{@snippets[language].size})" %></h3>
+  <ul>
+    <% snippets.each do |snip| %>
+      <% if snip.private %>
+        <% priv = "(private)" %>
+      <% else %>
+        <% priv = "" %>
+      <% end %>
+
+        <li><%= link_to "#{snip.name} #{priv}", snippet_path(snip) %></li>
+    <% end %>
+  </ul>
+
+<% end %>

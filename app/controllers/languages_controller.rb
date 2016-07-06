@@ -1,12 +1,7 @@
 class LanguagesController < ApplicationController
 
   def index
-    @languages = Language.order(:name)
-  end
-
-  def show
-    @language = Language.find params[:id]
-    @snippets = @language.snippets
+    @snippets = Snippet.where(private: false).or(Snippet.where(user: current_user)).order(:name).group_by{|s| s.language.name}
   end
 
 end
