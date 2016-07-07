@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
-    <h2>Snippets by Language</h2>
+    <h2 class="text-center">Code Snippets</h2>
+    <br>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
       <% @snippets.each do |language,snippets| %>
@@ -21,7 +22,9 @@
             <% else %>
               <% priv = "" %>
             <% end %>
-              <li><%= link_to "#{snip.name} #{priv}", snippet_path(snip) %></li>
+              <li><%= link_to "#{snip.name} #{priv}", snippet_path(snip),
+                                remote: true,
+                                data: {toggle: "modal", target: "#show-snippet"} %></li>
           </div>
           <% end %>
         </div>
@@ -29,6 +32,26 @@
       </div>
       <% end %>
 
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Show Snippet Modal -->
+<div class="modal fade" id="show-snippet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Snippet</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>

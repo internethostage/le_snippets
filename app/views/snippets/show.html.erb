@@ -4,12 +4,17 @@
 <p>Title: <%= @snippet.name %></p>
 <p>Work: <%= markdown(@snippet.body)%></p>
 
+<br>
+<br>
 <% if can? :edit, @snippet %>
-  <%= link_to "Edit", edit_snippet_path(@snippet) %>
+  <%= link_to "Edit", edit_snippet_path(@snippet), class:"btn btn-warning" %>
 <% end %>
 
 <% if can? :destroy, @snippet %>
   <%= link_to "Delete", snippet_path(@snippet),
                         method: :delete,
+                        class:"btn btn-danger",
                         data: {confirm: "Are you sure you want to delete #{@snippet.name}?"} %>
 <% end %>
+
+<%= link_to "Go Back", root_path, class:"btn btn-primary" %>

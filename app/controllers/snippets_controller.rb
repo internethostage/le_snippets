@@ -1,10 +1,6 @@
 class SnippetsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!, except: [:show]
   before_action :find_snippet, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @snippets = Snippet.where(private: false).or(Snippet.where(user: current_user)).order(:name)
-  end
 
   def show
   end
@@ -40,7 +36,7 @@ class SnippetsController < ApplicationController
   def destroy
     redirect_to root_path, alert: "access denied" unless can? :destroy, @snippet
     @snippet.destroy
-    redirect_to snippets_path
+    redirect_to root_path
   end
 
   private
