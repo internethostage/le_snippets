@@ -20,5 +20,5 @@ module SnippetsHelper
     }
     Redcarpet::Markdown.new(renderer, options).render(content).html_safe
   end
-  
+
 end

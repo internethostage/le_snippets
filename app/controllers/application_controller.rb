@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  # def authenticate_user!
-  #   redirect_to new_session_path, notice: "Please sign in to continue" unless user_signed_in?
-  # end
-
   def authenticate_user!(return_point = request.url)
     unless user_signed_in?
       set_return_point(return_point)

@@ -3,7 +3,7 @@ class SnippetsController < ApplicationController
   before_action :find_snippet, only: [:show, :edit, :update, :destroy]
 
   def index
-    @snippets = Snippet.all
+    @snippets = Snippet.where(private: false).or(Snippet.where(user: current_user)).order(:name)
   end
 
   def show
@@ -25,9 +25,11 @@ class SnippetsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path, alert: "access denied" unless can? :destroy, @snippet
   end
 
   def update
+    redirect_to root_path, alert: "access denied" unless can? :update, @snippet
     if @snippet.update snippet_params
       redirect_to snippet_path(@snippet)
     else
@@ -36,6 +38,7 @@ class SnippetsController < ApplicationController
   end
 
   def destroy
+    redirect_to root_path, alert: "access denied" unless can? :destroy, @snippet
     @snippet.destroy
     redirect_to snippets_path
   end

@@ -1,6 +1,34 @@
-<h1>Snippets by Language</h1>
-<div>
-  <% @languages.each do |language| %>
-    <li><%= (language.snippets.length) > 0 ? (link_to language.name, language_path(language)) : (language.name) %> (<%= language.snippets.length %> Snippets)</li>
-  <% end %>
+<div class="row">
+  <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+    <h2>Snippets by Language</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+      <% @snippets.each do |language,snippets| %>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= language %>" aria-expanded="true" aria-controls="collapseOne">
+            <h4 class="panel-title">
+                <%= "#{language} (#{@snippets[language].size})" %>
+            </h4>
+          </a>
+        </div>
+
+        <div id="<%= language %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <% snippets.each do |snip| %>
+          <div class="panel-body">
+            <% if snip.private %>
+              <% priv = "(private)" %>
+            <% else %>
+              <% priv = "" %>
+            <% end %>
+              <li><%= link_to "#{snip.name} #{priv}", snippet_path(snip) %></li>
+          </div>
+          <% end %>
+        </div>
+
+      </div>
+      <% end %>
+
+    </div>
+  </div>
 </div>
