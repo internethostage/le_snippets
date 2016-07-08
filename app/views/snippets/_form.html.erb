@@ -5,6 +5,6 @@
     <%= f.association :language, collection: Language.order('name ASC'), required: false, include_blank: "Choose a snippet language" %>
     <%= f.input :body, required: false, :input_html => {:rows => 10}, placeholder: "Your code snippet..." %>
     <%= f.input :private, label: "Make snippet private?" %>
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-success" %>
   <% end %>
 </div>
