@@ -1,30 +1,50 @@
 <div class="modal-dialog" role="document">
   <div class="modal-content">
+<!--  Header of Modal, title, author, privacy and language go here -->
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="myModalLabel"><%= @snippet.name %></h4>
+      <span class="h3 modal-title" id="myModalLabel"><%= @snippet.name %></span><span style="font-style: italic"> Posted by: <%= @snippet.user.first_name %></span>
+      <span class="btn btn-xs pull-right btn-info">
+        <i class="fa fa-code" aria-hidden="true"></i>
+        <%= @snippet.language.name %>
+      </span>
+      <% if @snippet.private %>
+        <span class="btn btn-xs pull-right btn-primary">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          Private
+        </span>
+      <% elsif @snippet.private == false && @snippet.user == current_user %>
+        <span class="btn btn-xs pull-right btn-primary">
+          <i class="fa fa-unlock" aria-hidden="true"></i>
+          Public
+        </span>
+      <% end %>
     </div>
+<!-- End of Header of Modal  -->
+<!--  Body of Modal, where the snippet lives -->
     <div class="modal-body">
+      <div class="well">
+      <%= markdown(@snippet.body)%>
+      </div>
+    </div>
+<!-- End of Body of Modal -->
+<!--  Footer of Modal-->
+    <div class="modal-footer">
+      <% if can? :edit, @snippet %>
+        <%= link_to edit_snippet_path(@snippet), class:"btn btn-warning" do %>
+          <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+        <% end %>
+      <% end %>
 
-<p>Language: <%= @snippet.language.name %></p>
-<p>Author: <%= @snippet.user.email %></p>
-<p>Private: <%= @snippet.private %></p>
-<p>Title: <%= @snippet.name %></p>
-<p>Work: <%= markdown(@snippet.body)%></p>
-
-</div>
-<div class="modal-footer">
-  <% if can? :edit, @snippet %>
-    <%= link_to "Edit", edit_snippet_path(@snippet), class:"btn btn-warning" %>
-  <% end %>
-
-  <% if can? :destroy, @snippet %>
-    <%= link_to "Delete", snippet_path(@snippet),
-                          method: :delete,
-                          class:"btn btn-danger",
-                          data: {confirm: "Are you sure you want to delete #{@snippet.name}?"} %>
-  <% end %>
-  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-</div>
-</div>
+      <% if can? :destroy, @snippet %>
+        <%= link_to snippet_path(@snippet),
+                              method: :delete,
+                              class:"btn btn-danger",
+                              data: {confirm: "Are you sure you want to delete #{@snippet.name}?"} do %>
+                              <i class="fa fa-trash" aria-hidden="true"></i> Delete
+        <% end %>
+      <% end %>
+      <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
+    </div>
+<!-- End of Footer of Modal  -->
+  </div>
 </div>
