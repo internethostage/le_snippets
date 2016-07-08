@@ -4,4 +4,6 @@ class Snippet < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :language_id }
   validates :body, presence: true, length: { minimum: 10 }
+  validates :user, :presence => true
+  validates :language, :presence => true
 end
