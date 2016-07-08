@@ -46,12 +46,14 @@ RSpec.describe Snippet, type: :model do
 
     it 'is invalid without a user id' do
       s = build(:snippet, user: nil)
-      expect(s).to be_invalid
+      s.valid?
+      expect(s.errors[:user]).to include("can't be blank")
     end
 
     it 'is invalid without a language id' do
       s = build(:snippet, language: nil)
-      expect(s).to be_invalid
+      s.valid?
+      expect(s.errors[:language]).to include("can't be blank")
     end
 
   end
